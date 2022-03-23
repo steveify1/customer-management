@@ -1,0 +1,15 @@
+version: '3'
+services:
+  database:
+    image: postgres
+    volumes:
+      - db-datav:/var/lib/postgresql/data/
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: customerdb
+    ports:
+      - 5432:5432
+
+volumes:
+  db-datav:
