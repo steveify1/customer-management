@@ -4,4 +4,5 @@ export interface CreateGenderInput {
 
 export interface CreateGenderData {
     name: string;
+    normalizedName: string;
 }

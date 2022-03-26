@@ -5,6 +5,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { AuthModule } from './components/auth/auth.module';
+import { CustomerModule } from './components/customer/customer.module';
 import { GenderModule } from './components/gender/gender.module';
 import { UserModule } from './components/user/user.module';
 import ExceptionsFilter from './shared/filters/exceptions.filter';
@@ -31,6 +32,7 @@ import { PaginationMiddleware } from './shared/middlewares/pagination.middleware
     forwardRef(() => AuthModule),
     forwardRef(() => UserModule),
     forwardRef(() => GenderModule),
+    forwardRef(() => CustomerModule),
   ],
   controllers: [AppController],
   providers: [

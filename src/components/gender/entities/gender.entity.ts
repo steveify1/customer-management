@@ -8,6 +8,9 @@ export class Gender {
 
     @Column({ type: 'varchar', unique: true })
     name: string;
+
+    @Column({ type: 'varchar', unique: true })
+    normalizedName: string;
     
     @CreateDateColumn({ type: 'timestamp' })
     createdAt: Date;
