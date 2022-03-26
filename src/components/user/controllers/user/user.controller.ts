@@ -1,6 +1,6 @@
 import { Body, Controller, Get, HttpCode, Param, Post, Query, Req, Res, UseGuards } from '@nestjs/common';
-import { AuthGuard } from 'src/shared/guards/auth.guard';
-import { RoleGuard } from 'src/shared/guards/role.guard';
+import { AuthGuard } from '../../../../shared/guards/auth.guard';
+import { RoleGuard } from '../../../../shared/guards/role.guard';
 import { SuccessResponse } from '../../../../shared/utils/response.utils';
 import { CreateUserDto } from '../../dto/user.dto';
 import { UserRole } from '../../enum/role.enum';

@@ -1,4 +1,4 @@
-import { forwardRef, Inject, Injectable, InternalServerErrorException } from '@nestjs/common';
+import { forwardRef, Inject, Injectable } from '@nestjs/common';
 import { UserRole } from './components/user/enum/role.enum';
 import { UserService } from './components/user/services/user.service';
 
