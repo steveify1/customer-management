@@ -1,7 +1,5 @@
-import { ConflictException, forwardRef, Inject, Injectable, NotFoundException } from '@nestjs/common';
-import { CreateUserDto } from '../dto/user.dto';
+import { ConflictException, Injectable, NotFoundException } from '@nestjs/common';
 import { UserFactory } from '../factories/user.factory';
-import { computePhonenumber } from '../utils/string.utils';
 import { getManager, Repository } from 'typeorm';
 import { User } from '../entities/user.entity';
 import { ServiceMethodOptions } from '../../../shared/interfaces/service-method-options.interface';
@@ -32,18 +30,9 @@ export class UserService {
         });
     }
 
-    buildFilter(query: any) {
-        const filter = {};
-        return filter;
-    }
-
     async find(options: ServiceMethodOptions): Promise<PaginatedResult<User>> {
         const { pagination } = options;
-        const filter = this.buildFilter(options.query);
-        const result = await this.userRepo.findAndCount({
-            where: { ...filter },
-            ...pagination,
-        });
+        const result = await this.userRepo.findAndCount({ ...pagination });
         return {
             records: result[0],
             count: result[1],

@@ -1,6 +1,5 @@
 import { User } from "../entities/user.entity";
 import { CreateUserData } from "../interfaces/user.interface";
-import { computePhonenumber } from "../utils/string.utils";
 
 export class UserFactory {
     static create(data: CreateUserData): User {

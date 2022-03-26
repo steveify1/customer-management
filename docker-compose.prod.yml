@@ -1,0 +1,43 @@
+version: '3'
+services:
+  database:
+    image: mysql
+    restart: always
+    volumes:
+      - db-data:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: extrasupersecret
+      MYSQL_USER: ${DATABASE_USERNAME}
+      MYSQL_PASSWORD: ${DATABASE_PASSWORD}
+      MYSQL_DATABASE: ${DATABASE_NAME}
+    ports:
+      - 33061:3306
+
+  app:
+    build: .
+    container_name: customer-mgt-api
+    command: bash -c "npm run migrations && npm run start:dev"
+    depends_on:
+      - database
+    links:
+      - database
+    environment:
+      PORT: ${PORT}
+      NODE_ENV: ${NODE_ENV}
+      JWT_AUTH_SECRET: ${JWT_AUTH_SECRET}
+      JWT_EXPIRES_IN: ${JWT_EXPIRES_IN}
+      DATABASE_TYPE: ${DATABASE_TYPE}
+      DATABASE_HOST: 'database'
+      DATABASE_PORT: 3306
+      DATABASE_USERNAME: ${DATABASE_USERNAME}
+      DATABASE_PASSWORD: ${DATABASE_PASSWORD}
+      DATABASE_NAME: ${DATABASE_NAME}
+      ROOT_ADMIN_PASSWORD: ${ROOT_ADMIN_PASSWORD}
+    ports:
+      - 7000:7000
+    volumes:
+      - /app/node_modules
+      - .:/app
+
+volumes:
+  db-data:
