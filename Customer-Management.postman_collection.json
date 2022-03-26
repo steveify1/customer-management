@@ -1,0 +1,1093 @@
+{
+	"info": {
+		"_postman_id": "ca34ff54-15df-4706-b2ef-6913d667c135",
+		"name": "Customer Management",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const body = pm.response.json();",
+									"if (body?.data) {",
+									"    pm.environment.set('token', body.data.token);",
+									"}",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"admin@customermanagement.com\",\n    \"password\": \"supersecret\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/auth/login",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"auth",
+								"login"
+							]
+						},
+						"description": "This endpoint allows users to sign in to their account.\n\n#### Authorization\nNone required\n\n#### Body\n| Field | Type | Required | Description |\n|-----|-----|-----|-----|\n| email | string | Y | Email address of the user |\n| password | string | Y | A password |"
+					},
+					"response": [
+						{
+							"name": "Login",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"email\": \"admin@customermanagement.com\",\n    \"password\": \"supersecret\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/auth/login",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"auth",
+										"login"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "286"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"11e-W+MwPwf/mMPizyq7MYn5GWO4RiQ\""
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 26 Mar 2022 13:24:54 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": true,\n    \"message\": \"Successfully logged in\",\n    \"data\": {\n        \"token\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZmlyc3ROYW1lIjoiUm9vdCIsImxhc3ROYW1lIjoiQWRtaW4iLCJyb2xlIjoic3VwZXJhZG1pbiIsImlhdCI6MTY0ODMwMTA5NCwiZXhwIjoxNjU2MDc3MDk0fQ.izmhQSBvV-F3Zbfjv_1tJTrnjjYTVBJ_2cNabzq5V7M\"\n    }\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "Create User",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"firstName\": \"Akpu\",\n    \"lastName\": \"Nwa\",\n    \"email\": \"akpunwa@gmail.com\",\n    \"password\": \"supersecret\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/users",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"users"
+							]
+						},
+						"description": "This endpoints allows clients to create a user record\n\n#### Authorization\nRequires access token and the superadmin role\n\n#### Body\n| Field | Type | Required | Description |\n|-----|-----|-----|-----|\n| firstName | string | Y | First name of the user |\n| lastName | string | Y | Last name of the user |\n| email | string | Y | Email address of the user |\n| password | string | Y | A password |"
+					},
+					"response": [
+						{
+							"name": "Create User",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"firstName\": \"Akpu\",\n    \"lastName\": \"Nwa\",\n    \"email\": \"akpunwa@gmail.com\",\n    \"password\": \"supersecret\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/users",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"users"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "208"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"d0-i5l5c3LNGCKFMhe4Mx454rq03Oc\""
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 26 Mar 2022 13:41:00 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": true,\n    \"message\": \"Successfully created an account\",\n    \"data\": {\n        \"firstName\": \"Akpu\",\n        \"lastName\": \"Nwa\",\n        \"email\": \"akpunwa@gmail.com\",\n        \"role\": \"admin\",\n        \"avatar\": null,\n        \"id\": 2,\n        \"createdAt\": \"2022-03-26T13:41:00.684Z\"\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Get Users",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/users?page=1",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"users"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								}
+							]
+						},
+						"description": "This endpoint returns a paginated list of users\n\n#### Authorization\nRequires access token and at least an admin role\n\n#### Query Parameters\n| Field | Type | Required | Description |\n|-----|-----|-----|-----|\n| page | integer | N | The current page. Defaults to 1. |\n| limit | integer | N | The number of results per page. Defaults to 10. Max is 100 per page |"
+					},
+					"response": [
+						{
+							"name": "Get Users",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/users?page=1",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"users"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "531"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"213-l2VWNchpfxrYgtSqaZLnrZ3b6zU\""
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 26 Mar 2022 08:05:54 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": true,\n    \"message\": \"Query successful\",\n    \"data\": {\n        \"records\": [\n            {\n                \"id\": 2,\n                \"firstName\": \"Root\",\n                \"lastName\": \"Admin\",\n                \"avatar\": null,\n                \"email\": \"admin@customermanagement.com\",\n                \"role\": \"superadmin\",\n                \"createdAt\": \"2022-03-26T06:28:33.050Z\"\n            },\n            {\n                \"id\": 3,\n                \"firstName\": \"Stephen\",\n                \"lastName\": \"Ifeanyi\",\n                \"avatar\": null,\n                \"email\": \"nwakasistephen@gmail.com\",\n                \"role\": \"admin\",\n                \"createdAt\": \"2022-03-26T06:56:19.523Z\"\n            },\n            {\n                \"id\": 4,\n                \"firstName\": \"Akpu\",\n                \"lastName\": \"Nwa\",\n                \"avatar\": null,\n                \"email\": \"akpunwa@gmail.com\",\n                \"role\": \"admin\",\n                \"createdAt\": \"2022-03-26T06:58:42.126Z\"\n            }\n        ],\n        \"count\": 3\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Get A User",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/users/2",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"users",
+								"2"
+							]
+						},
+						"description": "This endpoint returns fetches a user by their ID.\n\n#### Authorization\nRequires bearer token and at least admin role."
+					},
+					"response": [
+						{
+							"name": "Get A User",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/users/2",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"users",
+										"2"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "211"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"d3-u2VF4fsHn3kiJ50Mke70E4bA3xw\""
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 26 Mar 2022 08:09:11 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": true,\n    \"message\": \"Query successful\",\n    \"data\": {\n        \"id\": 2,\n        \"firstName\": \"Root\",\n        \"lastName\": \"Admin\",\n        \"avatar\": null,\n        \"email\": \"admin@customermanagement.com\",\n        \"role\": \"superadmin\",\n        \"createdAt\": \"2022-03-26T06:28:33.050Z\"\n    }\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Gender",
+			"item": [
+				{
+					"name": "Create gender",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Male\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/genders",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"genders"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Create gender",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"name\": \"Female\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/genders",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"genders"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "159"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"9f-0dMWBcRiLQ+LjdpT98pGL70AZWM\""
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 26 Mar 2022 13:25:14 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": true,\n    \"message\": \"New gender was added successfully\",\n    \"data\": {\n        \"name\": \"Female\",\n        \"normalizedName\": \"female\",\n        \"id\": 1,\n        \"createdAt\": \"2022-03-26T13:25:13.981Z\"\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Fetch genders",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/genders",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"genders"
+							]
+						},
+						"description": "This endpoint returns a list of genders\n\n#### Authorization\nRequires access token and at least an admin role"
+					},
+					"response": [
+						{
+							"name": "Fetch genders",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BASE_URL}}/genders",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"genders"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "230"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"e6-+5CtYEkWfiqAxOeKi9oNq3ZcUE8\""
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 26 Mar 2022 13:39:46 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": true,\n    \"message\": \"Query successful\",\n    \"data\": [\n        {\n            \"id\": 1,\n            \"name\": \"Female\",\n            \"normalizedName\": \"female\",\n            \"createdAt\": \"2022-03-26T13:25:13.981Z\"\n        },\n        {\n            \"id\": 2,\n            \"name\": \"Male\",\n            \"normalizedName\": \"male\",\n            \"createdAt\": \"2022-03-26T13:39:29.944Z\"\n        }\n    ]\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Customer",
+			"item": [
+				{
+					"name": "Create Customer",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"firstName\": \"Mike\",\n    \"lastName\": \"Ikenna\",\n    \"email\": \"miko@gmail.com\",\n    \"genderId\": 1\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/customers",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"customers"
+							]
+						},
+						"description": "This endpoints allows clients to create a customer record\n\n#### Authorization\nRequires access token and at least an admin role\n\n#### Body\n| Field | Type | Required | Description |\n|-----|-----|-----|-----|\n| firstName | string | Y | First name of the customer |\n| lastName | string | Y | Last name of the customer |\n| email | string | Y | Email address of the customer |\n| genderId | integer | Y | The Gender ID |"
+					},
+					"response": [
+						{
+							"name": "Create Customer",
+							"originalRequest": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"firstName\": \"Mike\",\n    \"lastName\": \"Ikenna\",\n    \"email\": \"miko@gmail.com\",\n    \"genderId\": 1\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/customers",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"customers"
+									]
+								}
+							},
+							"status": "Created",
+							"code": 201,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "240"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"f0-/BvctKAMALbHrU2G8DTCEjdWva8\""
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 26 Mar 2022 13:25:21 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": true,\n    \"message\": \"Customer was successfully created\",\n    \"data\": {\n        \"firstName\": \"Mike\",\n        \"lastName\": \"Ikenna\",\n        \"email\": \"miko@gmail.com\",\n        \"genderId\": 1,\n        \"creatorId\": 1,\n        \"avatar\": null,\n        \"id\": 1,\n        \"isDeleted\": false,\n        \"createdAt\": \"2022-03-26T13:25:21.647Z\"\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Get Customers",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/customers?page=1&genderId=1&isDeleted=0&email=miko@gmail.com",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"customers"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "1"
+								},
+								{
+									"key": "genderId",
+									"value": "1"
+								},
+								{
+									"key": "isDeleted",
+									"value": "0"
+								},
+								{
+									"key": "email",
+									"value": "miko@gmail.com"
+								}
+							]
+						},
+						"description": "This endpoint returns a paginated list of customers\n\n#### Authorization\nRequires bearer token and at least admin role\n\n#### Query Parameters\n| Field | Type | Required | Description |\n|-----|-----|-----|-----|\n| page | integer | N | The current page. Defaults to 1. |\n| limit | integer | N | The number of results per page. Defaults to 10. Max is 100 per page |\n| isDeleted | integer | N | Filters by whether a customer has been marked as deleted or not. Allowed values are `1` and `0`. `1` representing that a customer has been marked as deleted while `0` means they haven't. |\n| email | string | N | Filters by an email address |\n| genderId | integer | N | Filters by a gender ID |"
+					},
+					"response": [
+						{
+							"name": "Get Customers",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/customers?page=1&genderId=1&isDeleted=0&email=miko@gmail.com",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"customers"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "1"
+										},
+										{
+											"key": "genderId",
+											"value": "1"
+										},
+										{
+											"key": "isDeleted",
+											"value": "0"
+										},
+										{
+											"key": "email",
+											"value": "miko@gmail.com"
+										}
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "346"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"15a-tOu4AzDCSFuPuI4vEDaQFWKDfRU\""
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 26 Mar 2022 13:29:11 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": true,\n    \"message\": \"Query successful\",\n    \"data\": {\n        \"records\": [\n            {\n                \"id\": 1,\n                \"firstName\": \"Mike\",\n                \"lastName\": \"Ikenna\",\n                \"avatar\": null,\n                \"email\": \"miko@gmail.com\",\n                \"genderId\": 1,\n                \"creatorId\": 1,\n                \"isDeleted\": false,\n                \"createdAt\": \"2022-03-26T13:25:21.647Z\",\n                \"gender\": {\n                    \"id\": 1,\n                    \"name\": \"Female\",\n                    \"normalizedName\": \"female\",\n                    \"createdAt\": \"2022-03-26T13:25:13.981Z\"\n                }\n            }\n        ],\n        \"count\": 1\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Get A Customer",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/customers/1",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"customers",
+								"1"
+							]
+						},
+						"description": "This endpoint returns fetches a customer by their ID.\n\n#### Authorization\nRequires bearer token and at least admin role."
+					},
+					"response": [
+						{
+							"name": "Get A Customer",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/customers/1",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"customers",
+										"1"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "487"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"1e7-nzlWzKOyeNrL9oEeYwrR4ZMVVfg\""
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 26 Mar 2022 09:31:40 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": true,\n    \"message\": \"Query successful\",\n    \"data\": {\n        \"id\": 1,\n        \"firstName\": \"Mike\",\n        \"lastName\": \"Ikenna\",\n        \"avatar\": null,\n        \"email\": \"miko@gmail.com\",\n        \"genderId\": 1,\n        \"creatorId\": 2,\n        \"isDeleted\": false,\n        \"createdAt\": \"2022-03-26T08:28:19.871Z\",\n        \"gender\": {\n            \"id\": 1,\n            \"name\": \"Male\",\n            \"normalizedName\": \"male\",\n            \"createdAt\": \"2022-03-26T08:04:35.866Z\"\n        },\n        \"creator\": {\n            \"id\": 2,\n            \"firstName\": \"Root\",\n            \"lastName\": \"Admin\",\n            \"avatar\": null,\n            \"email\": \"admin@customermanagement.com\",\n            \"role\": \"superadmin\",\n            \"createdAt\": \"2022-03-26T06:28:33.050Z\"\n        }\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Update A Customer",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"firstName\": \"Peter\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/customers/1",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"customers",
+								"1"
+							]
+						},
+						"description": "This endpoints allows clients to update the details of a customer record\n\n#### Authorization\nRequires access token and at least an admin role\n\n#### Body\n| Field | Type | Required | Description |\n|-----|-----|-----|-----|\n| firstName | string | N | First name of the customer |\n| lastName | string | N | Last name of the customer |\n| email | string | N | Email address of the customer |\n| genderId | integer | N | The Gender ID |"
+					},
+					"response": [
+						{
+							"name": "Update A Customer",
+							"originalRequest": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"firstName\": \"Peter\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/customers/1",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"customers",
+										"1"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "280"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"118-T0ondLI6bu1zAxQhzaSF/BN8zZQ\""
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 26 Mar 2022 09:33:16 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": true,\n    \"message\": \"Customer was updated successfully\",\n    \"data\": {\n        \"id\": 1,\n        \"firstName\": \"Peter\",\n        \"lastName\": \"Ikenna\",\n        \"avatar\": null,\n        \"email\": \"miko@gmail.com\",\n        \"genderId\": 1,\n        \"creatorId\": 2,\n        \"isDeleted\": false,\n        \"createdAt\": \"2022-03-26T08:28:19.871Z\",\n        \"updatedAt\": \"2022-03-26T08:33:16.000Z\"\n    }\n}"
+						}
+					]
+				},
+				{
+					"name": "Mark A Customer As Deleted",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/customers/1",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"customers",
+								"1"
+							]
+						},
+						"description": "This endpoints allows clients to mark of a customer as deleted.\n\n#### Authorization\nRequires access token and at least an admin role"
+					},
+					"response": [
+						{
+							"name": "Mark A Customer As Deleted",
+							"originalRequest": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/customers/1",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"customers",
+										"1"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "288"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"120-zx9sHorG4KIMSolwUX1ddFPBgjI\""
+								},
+								{
+									"key": "Date",
+									"value": "Sat, 26 Mar 2022 13:37:29 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"success\": true,\n    \"message\": \"Customer was successfully marked as deleted\",\n    \"data\": {\n        \"id\": 1,\n        \"firstName\": \"Mike\",\n        \"lastName\": \"Ikenna\",\n        \"avatar\": null,\n        \"email\": \"miko@gmail.com\",\n        \"genderId\": 1,\n        \"creatorId\": 1,\n        \"isDeleted\": true,\n        \"createdAt\": \"2022-03-26T13:25:21.647Z\",\n        \"updatedAt\": \"2022-03-26T13:37:29.000Z\"\n    }\n}"
+						}
+					]
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{token}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}

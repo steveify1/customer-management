@@ -1,8 +1,17 @@
-import { Module } from '@nestjs/common';
+import { BadRequestException, forwardRef, MiddlewareConsumer, Module, NestModule, RequestMethod, ValidationPipe } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import { APP_FILTER, APP_INTERCEPTOR, APP_PIPE } from '@nestjs/core';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import { AuthModule } from './components/auth/auth.module';
+import { CustomerModule } from './components/customer/customer.module';
+import { GenderModule } from './components/gender/gender.module';
+import { UserModule } from './components/user/user.module';
+import ExceptionsFilter from './shared/filters/exceptions.filter';
+import { LoggingInterceptor } from './shared/interceptors/logging.interceptor';
+import ResponseSerializerInterceptor from './shared/interceptors/response.interceptor';
+import { PaginationMiddleware } from './shared/middlewares/pagination.middleware';
 
 @Module({
   imports: [
@@ -10,18 +19,55 @@ import { AppService } from './app.service';
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
       useFactory: (configService: ConfigService) => ({
-        type: 'postgres',
+        type: 'mysql',
         host: configService.get('DATABASE_HOST'),
         port: configService.get('DATABASE_PORT'),
         username: configService.get('DATABASE_USERNAME'),
         password: configService.get('DATABASE_PASSWORD'),
         database: configService.get('DATABASE_NAME'),
-        entities: configService.get('DATABASE_ENTITIES'),
+        entities: ['dist/**/*.entity.js'],
       }),
       inject: [ConfigService],
-    })
+    }),
+    forwardRef(() => AuthModule),
+    forwardRef(() => UserModule),
+    forwardRef(() => GenderModule),
+    forwardRef(() => CustomerModule),
   ],
   controllers: [AppController],
-  providers: [ConfigService, AppService],
+  providers: [
+    ConfigService,
+    AppService,
+    {
+      provide: APP_FILTER,
+      useClass: ExceptionsFilter,
+    },
+    {
+      provide: APP_INTERCEPTOR,
+      useClass: ResponseSerializerInterceptor,
+    },
+    {
+      provide: APP_INTERCEPTOR,
+      useClass: LoggingInterceptor,
+    },
+    {
+      provide: APP_PIPE,
+      useFactory: () => {
+        return new ValidationPipe({
+          exceptionFactory: (errors) => new BadRequestException(errors),
+          transform: true,
+          validationError: { target: false, value: false },
+          whitelist: true,
+          forbidNonWhitelisted: true,
+        });
+      },
+    },
+  ],
 })
-export class AppModule {}
+export class AppModule implements NestModule {
+  configure(consumer: MiddlewareConsumer) {
+    return consumer
+      .apply(PaginationMiddleware)
+      .forRoutes({ path: '*', method: RequestMethod.GET });
+  }
+}

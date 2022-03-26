@@ -1,15 +1,17 @@
 version: '3'
 services:
   database:
-    image: postgres
+    image: mysql
+    restart: always
     volumes:
-      - db-datav:/var/lib/postgresql/data/
+      - db-data:/var/lib/mysql
     environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: customerdb
+      MYSQL_ROOT_PASSWORD: extrasupersecret
+      MYSQL_USER: ${DATABASE_USERNAME}
+      MYSQL_PASSWORD: ${DATABASE_PASSWORD}
+      MYSQL_DATABASE: ${DATABASE_NAME}
     ports:
-      - 5432:5432
+      - 33061:3306
 
 volumes:
-  db-datav:
+  db-data:
