@@ -4,8 +4,8 @@ export interface CreateUserInput {
     lastName: string;
     phoneCode?: string;
     phoneNumber?: string;
-    genderId?: string;
-    dob?: Date | string;
+    password: string;
+    role?: string;
 }
 
 export interface CreateUserData {
@@ -14,10 +14,6 @@ export interface CreateUserData {
     lastName: string;
     phoneCode?: string;
     phoneNumber?: string;
-    genderId?: string;
-    paymentGatewayCustomerCode?: string;
     password: string
-    isVerified?: boolean;
-    socialAuthKey?: string;
     role: string;
 }

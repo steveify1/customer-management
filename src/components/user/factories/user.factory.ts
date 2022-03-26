@@ -9,9 +9,6 @@ export class UserFactory {
         for (const [key, value] of Object.entries(data)) {
             user[key] = value;
         }
-        if(data.phoneCode && data.phoneNumber) {
-            user.phoneNumber = computePhonenumber(data.phoneCode, data.phoneNumber);
-        }
         
         return user;
     }

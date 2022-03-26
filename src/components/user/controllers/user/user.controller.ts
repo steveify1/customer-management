@@ -1,35 +1,45 @@
 import { Body, Controller, Get, HttpCode, Param, Post, Query, Req, Res, UseGuards } from '@nestjs/common';
 import { AuthGuard } from 'src/shared/guards/auth.guard';
+import { RoleGuard } from 'src/shared/guards/role.guard';
 import { SuccessResponse } from '../../../../shared/utils/response.utils';
 import { CreateUserDto } from '../../dto/user.dto';
+import { UserRole } from '../../enum/role.enum';
 import { UserService } from '../../services/user.service';
 
-@Controller()
+@Controller('v1/users')
 export class UserController {
     constructor(
         private readonly userService: UserService
     ){}
 
-    @Post("/auth/register")
+    @Post()
+    @UseGuards(new RoleGuard([UserRole.SUPERADMIN]))
+    @UseGuards(AuthGuard)
     @HttpCode(201)
-    public async registerUser(@Body() data: CreateUserDto) {
-        await this.userService.create(data);
-        return SuccessResponse("Successfully created an account");
+    public async createUser(@Body() body: CreateUserDto) {
+        const user = await this.userService.create(body);
+        return SuccessResponse("Successfully created an account", user);
     }
 
-    @Get("/profile/me")
+    @Get()
+    @UseGuards(new RoleGuard([UserRole.ADMIN, UserRole.SUPERADMIN]))
     @UseGuards(AuthGuard)
     @HttpCode(200)
-    public async fetchProfile(@Req() req) {
-       const profile = await  this.userService.findByUserId(req.user.id);    
-       return SuccessResponse("Successfully feched profile information", profile);
+    public async getUsers(
+        @Req() req: any,
+        @Query() query: any
+    ) {
+        const { pagination } = req;
+        const users = await  this.userService.find({ query, pagination }); 
+        return SuccessResponse("Query successful", users);
     }
 
-    @Get("/users/:id")
+    @Get("/:id")
+    @UseGuards(new RoleGuard([UserRole.ADMIN, UserRole.SUPERADMIN]))
     @UseGuards(AuthGuard)
     @HttpCode(200)
-    public async getUser(@Req() req, @Param('id') id: string, ) {
-       const user = await  this.userService.findByUserId(req.user.id);    
-       return SuccessResponse("Successfully feched user in", user);
+    public async getUser(@Param('id') id: string, ) {
+       const user = await  this.userService.findOne(id);    
+       return SuccessResponse("Query successful", user);
     }
 }

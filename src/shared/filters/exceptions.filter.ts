@@ -25,14 +25,14 @@ export default class ExceptionsFilter implements ExceptionFilter {
 
   getValidationErrors(exception: unknown) {
     if (exception instanceof BadRequestException) {
-      const message = exception.getResponse();
+      const response = exception.getResponse() as any;
 
-      if (typeof message === 'object') {
-        return (message as any).errors;
+      if (Array.isArray(response.message)) {
+        return (response as any).message[0];
       }
     }
 
-    return []  
+    return []
   }
 
 

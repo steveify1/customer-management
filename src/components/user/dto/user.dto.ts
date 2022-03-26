@@ -1,4 +1,4 @@
-import { IsDate, IsDateString, IsEmail, IsEnum, IsNotEmpty, IsOptional, IsPhoneNumber, IsString, MaxDate, MinLength } from "class-validator";
+import { IsDate, IsDateString, IsEmail, IsEnum, IsNotEmpty, IsNumberString, IsOptional, IsPhoneNumber, IsString, MaxDate, MinLength } from "class-validator";
 
 export class CreateUserDto {
     @IsString()
@@ -18,16 +18,14 @@ export class CreateUserDto {
     @IsNotEmpty()
     @MinLength(6)
     password: string;
+}
 
-    @IsString()
-    @IsNotEmpty()
-    phoneCode: string;
+export class GetUsersQueryDto {
+    @IsNumberString()
+    @IsOptional()
+    page: string;
 
-    @IsString()
-    @IsNotEmpty()
-    phoneNumber: string;
-
-    @IsString()
-    @IsNotEmpty()
-    genderId: string;
+    @IsNumberString()
+    @IsOptional()
+    limit: string;
 } 

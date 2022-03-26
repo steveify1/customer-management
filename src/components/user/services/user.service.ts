@@ -1,4 +1,4 @@
-import { ConflictException, forwardRef, Inject, Injectable } from '@nestjs/common';
+import { ConflictException, forwardRef, Inject, Injectable, NotFoundException } from '@nestjs/common';
 import { CreateUserDto } from '../dto/user.dto';
 import { UserFactory } from '../factories/user.factory';
 import { computePhonenumber } from '../utils/string.utils';
@@ -7,20 +7,14 @@ import { User } from '../entities/user.entity';
 import { ServiceMethodOptions } from '../../../shared/interfaces/service-method-options.interface';
 import { InjectRepository } from '@nestjs/typeorm';
 import { UserRole } from '../enum/role.enum';
+import { PaginatedResult } from 'src/shared/interfaces/paginated-result.interface';
+import { CreateUserInput } from '../interfaces/user.interface';
 
 @Injectable()
 export class UserService {
     constructor(
         @InjectRepository(User) private readonly userRepo: Repository<User>,
     ) {}
-
-    async checkDuplicatePhoneNumber(phoneCode: string, phoneNumber: string) {
-        const computedPhoneNumber = computePhonenumber(phoneCode, phoneNumber);
-        const user = await this.userRepo.findOne({ where: { phoneNumber: computedPhoneNumber } });
-        if (user) {
-            throw new ConflictException("Phone number is associated with a different account");
-        }
-    }
 
     async checkDuplicateEmail(email: string) {
         const user = await this.userRepo.findOne({ where: { email } });
@@ -29,18 +23,41 @@ export class UserService {
         }
     }
 
-    public async create(data: CreateUserDto) {
-        await getManager().transaction(async entityManager => {
-            await this.checkDuplicateEmail(data.email);
-            await this.checkDuplicatePhoneNumber(data.phoneCode, data.phoneNumber);
-            const role = UserRole.CUSTOMER;
-            const userAttribute = UserFactory.create({ ...data, role });
+    public async create(input: CreateUserInput) {
+        return getManager().transaction(async entityManager => {
+            await this.checkDuplicateEmail(input.email);
+            const role = input.role || UserRole.ADMIN;
+            const userAttribute = UserFactory.create({ ...input, role });
             return this.save(userAttribute, { entityManager });
         });
     }
 
+    buildFilter(query: any) {
+        const filter = {};
+        return filter;
+    }
+
+    async find(options: ServiceMethodOptions): Promise<PaginatedResult<User>> {
+        const { pagination } = options;
+        const filter = this.buildFilter(options.query);
+        const result = await this.userRepo.findAndCount({
+            where: { ...filter },
+            ...pagination,
+        });
+        return {
+            records: result[0],
+            count: result[1],
+        }
+    }
+
+    async findOne(id: string): Promise<User> {
+        const user = await this.findByUserId(id);
+        if (!user) throw new NotFoundException('User not found');
+        return user;
+    }
+
     async findByUserId(id: string): Promise<User> {
-        return this.userRepo.findOne({ where: { id }, relations: ['gender'] });
+        return this.userRepo.findOne({ where: { id } });
     }
 
     async findByEmail(email: string): Promise<User> {

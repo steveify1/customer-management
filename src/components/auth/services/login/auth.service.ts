@@ -11,7 +11,7 @@ import { LoginInput } from '../../interfaces/auth.service';
 @Injectable()
 export class AuthService {
     constructor(private readonly userService: UserService, private readonly config: ConfigService ){}
-    public async login(input: LoginInput) : Promise<{token: string}>{
+    public async login(input: LoginInput) : Promise<string>{
         const defaultErrorMessage = 'Email or password is incorrect';
 
         try {
@@ -21,8 +21,7 @@ export class AuthService {
             const isValidPassword = await user.comparePassword(input.password);
             if(!isValidPassword) throw new Error(defaultErrorMessage);
 
-            const token = await this.generateJwtToken(user);
-            return { token }
+            return this.generateJwtToken(user);
         } catch (error) {
             throw new UnauthorizedException(error.message);
         }
@@ -32,8 +31,8 @@ export class AuthService {
         const payload = UserFactory.generateJwt(user);
         return jwt.sign(
             payload,
-            this.config.get('jwt.JWT_AUTH_SECRET'),
-            { expiresIn: this.config.get('jwt.EXPIRES_IN') }
+            this.config.get('JWT_AUTH_SECRET'),
+            { expiresIn: this.config.get('JWT_EXPIRES_IN') }
         );
     }
 }

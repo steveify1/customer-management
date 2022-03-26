@@ -4,7 +4,7 @@ import { SuccessResponse } from '../../../../shared/utils/response.utils';
 import { LoginDto } from '../../dto/login.dto';
 import { AuthService } from '../../services/login/auth.service';
 
-@Controller('auth')
+@Controller('v1/auth')
 export class AuthController {
     constructor(
         private readonly authService: AuthService,

@@ -1,20 +1,12 @@
-import { Exclude, Expose } from "class-transformer";
-import { BeforeInsert, Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, OneToMany, OneToOne, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { Exclude } from "class-transformer";
+import { BeforeInsert, Column, CreateDateColumn, Entity, PrimaryColumn, UpdateDateColumn } from "typeorm";
 import { UserRole } from "../enum/role.enum";
 import { compareStringViaHash, hashString } from "../utils/string.utils";
 
-
-
-export enum Status {
-    PENDING = 'PENDING',
-    UNVERIFIED = 'UNVERIFIED',
-    VERIFIED = 'VERIFIED'
-}
-
 @Entity("users")
 export class User {
-    @PrimaryGeneratedColumn('uuid')
-    id: string;
+    @PrimaryColumn({ primary: true, generated: true })
+    id: number;
 
     @Column({ type: 'varchar' })
     firstName:string;
@@ -28,26 +20,12 @@ export class User {
     @Column({ type: "varchar", unique: true})
     email: string;
 
-    @Column({ type: "uuid", nullable: true })
-    genderId: string;
-
-    @Column({type: "varchar", nullable: true })
-    phoneNumber: string;
-
-    @Column({ type: 'varchar', default: UserRole.CUSTOMER })
+    @Column({ type: 'varchar', default: UserRole.ADMIN })
     role: UserRole;
-
-    @Exclude()
-    @Column({ type: "varchar", nullable: true})
-    confirmationToken: string;
 
     @Exclude()
     @Column({type: "varchar", nullable: true})
     password: string;
-
-    @Exclude()
-    @Column('boolean', {default: false})
-    active: boolean;
     
     @CreateDateColumn({ type: 'timestamp' })
     createdAt: Date;
